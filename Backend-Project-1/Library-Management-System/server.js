@@ -1,0 +1,25 @@
+// External modules/packages:
+import express from 'express';
+import 'dotenv/config';
+
+// Internal modules/packages:
+import * as routers from './routes/indexRouters.js';
+
+// Creating an app from ExpressJS:
+const app = express();
+
+// Constants from .ENV file:
+const port = process.env.PORT;
+
+// creating a middleware with `express.json()` to parse the json requests (should be created first so every middleware can get proper request data):
+app.use(express.json());
+
+// creating middlewares:
+app.get('/', (req, res) => {
+	res.send('Hello World!');   // after sending this, response is over
+});
+
+// server up and running and listening for requests:
+app.listen(port, () => {
+	console.log(`Example app listening on address - http://localhost:${port}`);
+});

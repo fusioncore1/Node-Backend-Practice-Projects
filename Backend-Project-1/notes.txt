@@ -1,0 +1,152 @@
+1. INITIAL NOTE::
+
+SnP Mode. Short and direct.
+
+### Do **NOT** overthink.
+
+For practice, you want **simple structure + clean logic**.
+
+### Make this:
+
+## **Library Management System (Backend only)**
+
+### Why this scenario
+
+* Slightly richer than “students CRUD”
+* Still simple
+* Very common in interviews
+* Forces relationships and edge cases
+
+---
+
+### Core Scenario
+
+A library has:
+
+* **Books**
+* **Members**
+* **Issued Books**
+
+---
+
+### Minimum Features (Practice Level)
+
+* Add / update / delete books
+* Register members
+* Issue a book to a member
+* Return a book
+* Prevent issuing if:
+
+  * Book already issued
+  * Member exceeded limit
+
+---
+
+### What you practice (without realizing)
+
+* CRUD done properly
+* Relations (Book ↔ Member)
+* State (`available`, `issued`)
+* Validation logic
+* Simple business rules
+
+---
+
+### What NOT to add
+
+* Payments
+* Fine calculation
+* Admin dashboards
+* Over-engineering
+
+---
+
+### Tech Stack (suggested, not mandatory)
+
+* Node.js + Express
+* MongoDB or MySQL
+* JWT optional (can skip auth for now)
+
+---
+
+### One-line goal
+
+> “I can design clean CRUD with rules, not just endpoints.”
+
+If you want next:
+
+* I can **list entities only**
+* Or **list API routes only**
+* Or **list edge cases only**
+
+You choose.
+
+
+2. CREATING DATA ENTITIES:
+- Entities: Book, Member, IssueRecord
+- Fields (MongoDB):
+a. Books: Book_Name, Author_Name, Edition, No_Of_Pages, Total_Copies, Available_Copies (one library might have 10 copies of same books).
+b. Member: Member_Name, Address, Phone, Email, Subs_Date_Start, Subs_Date_End, Issued_Books (Last second and third fields library subscription date start and expiry. For last field max value is 10).
+c. IssueRecord: Issue_Date, Return_Date, Book_Id, Member_Id, Status (enum - issue|return).
+
+- Improved (from above)::
+- Entities: book, member, issueRecord
+- Fields (MongoDB):
+a. Books: bookName, authorName, edition, noOfPages, totalCopies, availableCopies (may have multiple copies of same book name).
+b. Members: memberName, address, phone, email, subsDateStart (subscription date start), subsDateEnd (subscription date end), issuedBooks (max value is 10).
+c. IssueRecords: issueDate, returnDate, bookId, memberId, status (enum - issued|returned)
+
+
+3. DESIGNING API ROUTES:
+- 3 router files in total:
+
+a. Books:
+a1. addBookRouter - POST '/api/books' - Add book,
+a2. getAllBooksRouter - GET '/api/books' - Get all books,
+a3. getBookByIdRouter - GET '/api/books/:id' - Get book by id,
+a4. getBookByNameRouter - GET '/api/books/:name' - Get book by name,
+a5. updateBookByIdRouter - PUT '/api/books/:id' - Update book by id,
+a6. updateBookByNameRouter - PUT '/api/books/:name' - Update book by name,
+a7. deleteBookByIdRouter - DELETE '/api/books/:id' - Delete book by id,
+a8. deleteBookByNameRouter - DELETE '/api/books/:name' - Delete book by name,
+
+b. Members:
+b1. addMemberRouter - POST '/api/members' - Add member,
+b2. getAllMemberRouter - GET '/api/members' - Get all members,
+b3. getMemberByIdRouter - GET '/api/members/:id', - Get member by id,
+b4. getMemberByNameRouter - GET '/api/members/:name' - Get member by name,
+b5. updateMemberByIdRouter - PUT '/api/members/:id' - Update member by id,
+b6. updateMemberByNameRouter - PUT '/api/members/:name' - Update member by name,
+b7. deleteMemberByIdRouter - DELETE '/api/members/:id' - Delete member by id,
+b8. deleteMemberByNameRouter - DELETE '/api/members/:name' - Delete member by name,
+
+c. IssuedBooks:
+c1. addIssuedBookRouter - POST '/api/issued-books' - Add issued book,
+c2. getAllIssuedBookRouter - GET '/api/issued-books' - Get all issued books,
+c3. getIssuedBookByIdRouter - GET '/api/issued-books/:id' - Get issued book by id,
+c4. getAllIssuedBooksByDateRouter - GET '/api/issued-books/:date' - Get all issued books by date,
+c5. getIssuedBookByBookNameRouter (optional, since this will be complex),
+c6. updateIssuedBookByIdRouter - PUT '/api/issued-books/:id' - Update issued book by id,
+c7. deleteIssuedBookRouter - DELETE '/api/issued-books/:id' - Delete issued book by id
+
+Improved (from above):
+a. Books:
+a1. addBookRouter - POST '/api/books' - Add book,
+a2. getAllBooksRouter - GET '/api/books' - Get all books,
+a3. getBookByIdRouter - GET '/api/books/:id' - Get book by id,
+a4. updateBookByIdRouter - PUT '/api/books/:id' - Update book by id,
+a5. deleteBookByIdRouter - DELETE '/api/books/:id' - Delete book by id,
+
+b. Members:
+b1. addMemberRouter - POST '/api/members' - Add member,
+b2. getAllMemberRouter - GET '/api/members' - Get all members,
+b3. getMemberByIdRouter - GET '/api/members/:id', - Get member by id,
+b4. updateMemberByIdRouter - PUT '/api/members/:id' - Update member by id,
+b5. deleteMemberByIdRouter - DELETE '/api/members/:id' - Delete member by id,
+
+c. IssuedBooks:
+c1. addIssuedBookRouter - POST '/api/issues' - Add issued book,
+c2. getAllIssuedBookRouter - GET '/api/issues' - Get all issued books,
+c3. getIssuedBookByIdRouter - GET '/api/issues/:id' - Get issued book by id,
+c4. updateIssuedBookByIdRouter - PUT '/api/issues/:id' - Update issued book by id,
+c5. deleteIssuedBookRouter - DELETE '/api/issues/:id' - Delete issued book by id
