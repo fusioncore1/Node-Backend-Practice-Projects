@@ -5,6 +5,7 @@ import 'dotenv/config';
 // Internal modules/packages:
 import * as routers from './routes/indexRouters.js';
 import connectDb from './utils/connectDb.js';
+import errorHandler from './middlewares/error-middleware.js';
 
 // Creating an app from ExpressJS:
 const app = express();
@@ -22,6 +23,9 @@ connectDb();
 app.get('/', (req, res) => {
 	res.send('Hello World!');   // after sending this, response is over
 });
+
+// error middleware (should be in last after all middlewares):
+app.use(errorHandler);
 
 // server up and running and listening for requests:
 app.listen(port, () => {
