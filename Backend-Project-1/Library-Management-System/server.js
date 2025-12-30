@@ -1,6 +1,6 @@
 // External modules/packages:
 import express from 'express';
-import 'dotenv/config';
+// import 'dotenv/config';    // we don't need this package, as we will be using core functionality for env variables
 
 // Internal modules/packages:
 import * as routers from './routes/indexRouters.js';
@@ -11,7 +11,7 @@ import errorHandler from './middlewares/error-middleware.js';
 const app = express();
 
 // Constants from .ENV file:
-const port = process.env.PORT;
+const port = process.env.PORT || 3095;   // if mentioned port not available then go to fallback port
 
 // creating a middleware with `express.json()` to parse the json requests (should be created first so every middleware can get proper request data):
 app.use(express.json());
@@ -23,6 +23,11 @@ connectDb();
 app.get('/', (req, res) => {
 	res.send('Hello World!');   // after sending this, response is over
 });
+
+// creating routes:
+app.use('/api/books', routers.bookRouter);
+app.use('/api/members', routers.memberRouter);
+app.use('/api/issues', routers.issueRecordRouter);
 
 // error middleware (should be in last after all middlewares):
 app.use(errorHandler);

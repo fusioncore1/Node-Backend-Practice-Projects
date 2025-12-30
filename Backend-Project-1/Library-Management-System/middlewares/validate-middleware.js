@@ -6,7 +6,14 @@ const validateData = (schema) => {
 		const data = req.body;   // getting data from request
 
 		try {
-			await schema.validateAsync(data);   // since we are using try-catch, Joi docs tell us to use `validateAsync()` in place of `validate()`
+			const validated = await schema.validateAsync(data, {
+				abortEarly: false,   // this will allow validation to continue
+				stripUnknown: true,   // removes unknown elements
+			});   // since we are using try-catch, Joi docs tell us to use `validateAsync()` in place of `validate()`
+
+			// we will use this to pass into controllers:
+			req.validatedData = validated;   // this way, we won't be even needing to export the data directly
+
 			next();   // going to next middleware
 		}
 		catch (error) {
