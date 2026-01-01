@@ -38,13 +38,13 @@ const bookSchema = new mongoose.Schema({
 		required: true,
 		min: 0,
 		max: 20,
-		validate: {
-			validator: function (value) {
-				// 'this' is the document; 'value' is the current field's value
-				return this.totalCopies >= value;
-			},
-			message: 'availableCopies cannot be greater than totalCopies',
-		},
+		// 	validate: {
+		// 		validator: function (value) {
+		// 			// 'this' is the document; 'value' is the current field's value
+		// 			return this.totalCopies >= value;
+		// 		},
+		// 		message: 'availableCopies cannot be greater than totalCopies',
+		// 	},
 	},
 }, { timestamps: true });
 

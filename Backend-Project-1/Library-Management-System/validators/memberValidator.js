@@ -11,7 +11,7 @@ const schema = Joi.object({
 		.required(),
 
 	address: Joi.string()
-		.pattern('^[a-zA-Z0-9\\s.-()[\\]{}]+$')
+		.pattern(new RegExp('^[a-zA-Z0-9\\s,.-\\[\\(\\{\\}\\)\\]]+$'))
 		.min(3)
 		.max(3000)
 		.required(),

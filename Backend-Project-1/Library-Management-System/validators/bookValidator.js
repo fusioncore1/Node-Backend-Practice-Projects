@@ -5,7 +5,7 @@ import Joi from 'joi';
 const schema = Joi.object({
 
 	bookName: Joi.string()
-		.pattern(new RegExp('^[a-zA-Z0-9\\s?.-]+$'))   // If you intend to use hyphen `-` as a character, make sure to mention it at end. Cuz that's safe.
+		.pattern(new RegExp(`^[a-zA-Z0-9\\s?.\\'-]+$`))   // If you intend to use hyphen `-` as a character, make sure to mention it at end. Cuz that's safe.
 		.min(3)
 		.max(100)
 		.required(),

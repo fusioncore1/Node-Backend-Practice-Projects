@@ -45,13 +45,13 @@ const memberSchema = new Schema({
 	subsDateEnd: {
 		type: Date,
 		required: true,
-		validate: {
-			validator: function (value) {
-				// 'this' is the document; 'value' is the current field's value
-				return this.subsDateStart < value;
-			},
-			message: 'End date must be after start date!'
-		}
+		// validate: {
+		// 	validator: function (value) {
+		// 		// 'this' is the document; 'value' is the current field's value
+		// 		return this.subsDateStart < value;
+		// 	},
+		// 	message: 'End date must be after start date!'
+		// },
 	},
 
 	// number of books issued (every member will be issued max 10 books)

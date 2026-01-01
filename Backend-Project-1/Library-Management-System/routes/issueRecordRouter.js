@@ -22,6 +22,5 @@ router.get('/:id', getIssuedBookById);
 router.put('/:id', validateData(issueRecordValidator), updateIssuedBookById);
 router.delete('/:id', deleteIssuedBookById);
 
-
 // exporting the router object:
 export default router;

@@ -13,13 +13,13 @@ const issueRecordSchema = new Schema({
 
 	returnDate: {
 		type: Date,
-		validate: {
-			validator: function (value) {
-				// 'this' is the document; 'value' is the current field's value:
-				return this.issueDate < value;
-			},
-			message: 'returnDate must be after issueDate!',
-		},
+		// validate: {
+		// 	validator: function (value) {
+		// 		// 'this' is the document; 'value' is the current field's value:
+		// 		return this.issueDate < value;
+		// 	},
+		// 	message: 'returnDate must be after issueDate!',
+		// },
 	},
 
 	bookId: {

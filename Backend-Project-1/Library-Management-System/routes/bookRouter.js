@@ -20,6 +20,7 @@ router.post('/', validateData(bookValidator), addBook);
 router.get('/', getAllBooks);
 router.get('/:id', getBookById);
 router.put('/:id', validateData(bookValidator), updateBookById);
+// router.put('/:id', updateBookById);  // Need to use different validator for update. Idk why, but using the one for add, creates issues.
 router.delete('/:id', deleteBookById);
 
 // exporting the router object:
