@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"description": "A practice backend project on Library Management System",
 	"license": "ISC",
-	"author": "Devam Kakdiya",
+	"author": "Fusion Burner",
 	"type": "module",
 	"main": "server.js",
 	"scripts": {

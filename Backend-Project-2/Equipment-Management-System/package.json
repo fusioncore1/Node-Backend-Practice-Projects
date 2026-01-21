@@ -1,0 +1,19 @@
+{
+  "name": "equipment-management-system",
+  "version": "1.0.0",
+  "description": "An interview practice project for the backend of Equipment Management System",
+  "license": "ISC",
+  "author": "Fusion Burner",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "node --watch-path=./ --env-file=./.env server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "joi": "^18.0.2",
+    "mongoose": "^9.1.5"
+  }
+}

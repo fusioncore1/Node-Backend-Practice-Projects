@@ -1,0 +1,447 @@
+My Query:
+Okay, based on the library management system that we did last time, can you make a test question which is a similar to this project in which I have to create a backend?
+
+ChatGPT:
+(You’ll get *requirements, constraints, and evaluation criteria only*. No code.)
+
+---
+
+## Backend Test Question (Library-like, Different Domain)
+
+### Project Title
+
+**Equipment Rental Management System (ERMS)**
+
+### Objective
+
+Design and build a RESTful backend for managing rentable equipment (cameras, tools, machines, etc.), users, and rentals. The system must enforce availability, rental periods, and role-based access—similar in *complexity* to a Library Management System, not identical in domain.
+
+---
+
+## Core Entities (Data Modeling)
+
+1. **User**
+
+   * id
+   * name
+   * email (unique)
+   * role (`ADMIN`, `STAFF`, `CUSTOMER`)
+   * isActive
+   * createdAt
+
+2. **Equipment**
+
+   * id
+   * name
+   * category
+   * serialNumber (unique)
+   * status (`AVAILABLE`, `RENTED`, `MAINTENANCE`)
+   * dailyRate
+   * createdAt
+
+3. **Rental**
+
+   * id
+   * userId
+   * equipmentId
+   * startDate
+   * endDate
+   * actualReturnDate (nullable)
+   * status (`ACTIVE`, `COMPLETED`, `OVERDUE`, `CANCELLED`)
+   * totalCost
+
+4. **MaintenanceLog** (optional but scored)
+
+   * id
+   * equipmentId
+   * description
+   * startDate
+   * endDate
+
+---
+
+## Functional Requirements (Must Have)
+
+### Authentication & Authorization
+
+* JWT-based authentication
+* Role-based access:
+
+  * **ADMIN**: full access
+  * **STAFF**: manage equipment & rentals
+  * **CUSTOMER**: view equipment, create rentals, view own rentals
+
+---
+
+### Equipment Management
+
+* Add, update, soft-delete equipment
+* List equipment with filters:
+
+  * category
+  * status
+  * availability for a given date range
+
+---
+
+### Rental Workflow
+
+* Create a rental **only if equipment is AVAILABLE**
+* Prevent overlapping rentals for the same equipment
+* On rental creation:
+
+  * status → `ACTIVE`
+  * equipment status → `RENTED`
+* On return:
+
+  * calculate total cost (based on days × dailyRate)
+  * mark overdue if returned after endDate
+  * equipment status → `AVAILABLE`
+
+---
+
+### Business Rules (Important)
+
+* One equipment → one active rental at a time
+* In `MAINTENANCE`, equipment cannot be rented
+* Rental dates must be validated (start < end, no past dates)
+* A user cannot have more than **N active rentals** (choose a number and justify)
+
+---
+
+## API Expectations (High Level)
+
+You must design routes for:
+
+* Auth (register/login)
+* Equipment CRUD
+* Rental create / return / list
+* Admin/Staff views vs Customer views
+
+> You are evaluated on **route design**, not route count.
+
+---
+
+## Validation & Error Handling
+
+* Request validation (body, params, query)
+* Meaningful HTTP status codes
+* Clear error messages (no generic “Something went wrong”)
+
+---
+
+## Non-Functional Requirements
+
+* Clean project structure
+* Separation of concerns (routes / controllers / services / models)
+* Environment-based configuration
+* Consistent naming conventions
+
+---
+
+## Bonus (Optional, Scored Separately)
+
+* Pagination & sorting
+* Maintenance logs affecting availability
+* Rental history analytics (most rented equipment)
+* Unit tests for business rules
+
+---
+
+## Evaluation Criteria (What I’d Check)
+
+1. Data modeling correctness
+2. Enforcement of business rules
+3. Authorization correctness
+4. Edge-case handling
+5. Code organization & clarity
+6. Real-world thinking (not tutorial code)
+
+---
+
+If you want:
+
+* **Hard mode** → I’ll add race-condition scenarios
+* **Interview mode** → I’ll add trick requirements
+* **MongoDB-only or SQL-only constraints** → say the word
+
+SnP mode stays on until you deactivate it.
+
+
+
+
+My Query:
+This will be a practice question for interview and so I want to frame this practical question just like an interview. Please do that as well. Thanks.
+
+ChatGPT:
+Framed exactly like an **interview practical assignment**. No hints, no solutions.
+
+---
+
+# Backend Interview Practical Assignment
+
+### Time
+
+**2–3 hours**
+
+### Allowed
+
+* Internet (docs only)
+* Any backend framework of your choice
+* Any database of your choice
+
+### Not Allowed
+
+* Code generators / AI code completion
+* Copy-pasting full projects
+
+---
+
+## Problem Statement
+
+You are required to design and implement a **backend service** for an **Equipment Rental Management System**.
+
+The system will be used by a company that rents out physical equipment (tools, cameras, machines) to customers for short durations.
+
+Your task is to expose REST APIs that manage users, equipment, and rentals while enforcing real-world business constraints.
+
+---
+
+## Core Requirements
+
+### 1. Authentication & Roles
+
+Implement authentication with the following roles:
+
+* **ADMIN**
+* **STAFF**
+* **CUSTOMER**
+
+Role behavior:
+
+* ADMIN has full access
+* STAFF can manage equipment and rentals
+* CUSTOMER can browse equipment and rent items
+
+---
+
+### 2. Equipment Management
+
+Each equipment item must have:
+
+* Unique identifier
+* Name
+* Category
+* Daily rental price
+* Status: `AVAILABLE`, `RENTED`, `MAINTENANCE`
+
+Required operations:
+
+* Create equipment
+* Update equipment details
+* List equipment with filters
+* Soft delete equipment
+
+Equipment in `MAINTENANCE` must not be rentable.
+
+---
+
+### 3. Rental Management
+
+A rental represents a customer renting one equipment item for a time period.
+
+Rental must include:
+
+* Equipment reference
+* Customer reference
+* Start date
+* End date
+* Status
+
+Rules:
+
+* Equipment cannot have more than one **active** rental at a time
+* Overlapping rentals for the same equipment are not allowed
+* On rental creation:
+
+  * Equipment status must change accordingly
+* On rental return:
+
+  * Calculate total cost
+  * Detect overdue rentals
+
+---
+
+### 4. Business Constraints
+
+* Users cannot rent more than **X** items simultaneously
+  (Choose a reasonable number and document it)
+* Start date must be before end date
+* Rentals cannot start in the past
+* Returning an already returned rental must fail
+
+---
+
+### 5. API Design
+
+* Design clean and logical REST endpoints
+* Proper use of HTTP status codes
+* Consistent response structure
+
+You are **not** evaluated on UI or frontend.
+
+---
+
+## What We Are Evaluating
+
+We are **not** looking for the most features.
+
+We are evaluating:
+
+1. Ability to model real-world entities
+2. Enforcement of business rules
+3. Clean separation of concerns
+4. Error handling and validations
+5. Code readability
+6. Trade-off decisions (documented)
+
+---
+
+## Submission Expectations
+
+Your submission must include:
+
+* Source code
+* `.env.example`
+* `README.md` containing:
+
+  * Setup instructions
+  * API overview
+  * Assumptions made
+  * Limitations
+
+---
+
+## Bonus (Optional)
+
+* Pagination
+* Sorting
+* Basic unit tests
+* Simple analytics endpoint (e.g., most rented equipment)
+
+---
+
+## Interview Follow-Up Questions (You *will* be asked)
+
+Be prepared to explain:
+
+* How you prevented double booking
+* How you handled race conditions
+* Why you chose your DB
+* How this system would scale
+* What you would refactor with more time
+
+---
+
+### Final Note (Interview Tone)
+
+> Focus on **correctness and clarity**, not perfection.
+> A smaller, well-designed system beats a large broken one.
+
+---
+
+If you want, next I can:
+
+* Act as the **interviewer** and review your solution
+* Convert this into a **hard system-design round**
+* Create a **grading rubric** used by real companies
+
+Say the word.
+
+
+
+My Query:
+What equipments are we dealing with in this business?
+
+ChatGPT:
+
+### Equipment Scope (Defined for This Assignment)
+
+Assume the business rents **mid-value, serialized physical equipment** — not consumables.
+
+You are dealing with:
+
+#### Primary Categories
+
+* **Photography / Video**
+
+  * DSLR / Mirrorless cameras
+  * Lenses
+  * Tripods
+  * Lighting kits
+* **Construction / Industrial**
+
+  * Drilling machines
+  * Welding machines
+  * Power tools
+* **Event & Production**
+
+  * Sound systems
+  * Projectors
+  * LED panels
+* **General Utility**
+
+  * Generators
+  * Measuring instruments
+
+---
+
+### Important Constraints (Implicit but Expected)
+
+* Each equipment item:
+
+  * Is **individually identifiable** (serial number / asset tag)
+  * Can be rented **by only one customer at a time**
+  * Has a **daily rental cost**
+* No partial rentals (you rent the whole item, not hours)
+* No consumables (nothing that gets used up)
+
+---
+
+### Why This Scope Was Chosen (Interview Logic)
+
+* Forces **availability checks**
+* Forces **overlap prevention**
+* Makes **maintenance status meaningful**
+* Maps cleanly to a **library → rental** mental model
+
+---
+
+### What You Should NOT Assume
+
+* No bulk inventory (e.g., “10 cables”)
+* No hourly pricing
+* No delivery/logistics tracking
+* No damage deposits (unless you add it as an assumption)
+
+---
+
+### Interview Tip (Very Important)
+
+If the interviewer asks this and you answer:
+
+> “Assume serialized rentable equipment like cameras and power tools.”
+
+That is a **strong, sufficient answer**.
+
+Over-explaining here is a red flag in interviews.
+
+---
+
+If you want, next I can:
+
+* Help you write the **README assumptions section**
+* Ask you **mock interviewer follow-up questions**
+* Turn this into a **system design whiteboard discussion**
+
+Say what you want next.
