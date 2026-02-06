@@ -11,16 +11,19 @@ const userSchema = new Schema({
 		type: String,
 		required: true,
 	},
+
 	email: {
 		type: String,
 		required: true,
 		unique: true,    // starts unique index here
 	},
+
 	role: {
 		type: String,
 		required: true,
 		enum: ['Admin', 'Staff', 'Customer'],
 	},
+
 	isActive: {
 		type: Boolean,
 		required: true,

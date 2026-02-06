@@ -8,35 +8,41 @@ const rentalSchema = new mongoose.Schema({
 		ref: 'User',
 		required: true,
 	},
+
 	equipmentId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Equipment',
 		required: true,
 	},
+
 	startDate: {
 		type: Date,
 		required: true,
 	},
+
 	endDate: {
 		type: Date,
 		validate: {
-			validator: endAfterStartValidate(value),
+			validator: endAfterStartValidate,
 			message: 'End date must be after start date.',
 		},
 		required: true,
 	},
+
 	actualReturnDate: {                // this isn't required if customer hasn't returned equipment
 		type: Date,
 		validate: {
-			validator: endAfterStartValidate(value),
+			validator: endAfterStartValidate,
 			message: 'Actual return date must be after start date.',
 		}
 	},
+
 	status: {
 		type: String,
 		enum: ['Active', 'Completed', 'Overdue', 'Cancelled'],
 		required: true,
 	},
+
 	totalCost: {
 		type: Number,
 		required: true,
@@ -46,7 +52,7 @@ const rentalSchema = new mongoose.Schema({
 // creating a validation function for making sure endDate is after startDate:
 function endAfterStartValidate(value) {
 	// 'this' refers to the current document
-	value > this.startDate;
+	return value > this.startDate;																														// A BIG ISSUE AROUND HERE.............
 }
 
 // creating the model:

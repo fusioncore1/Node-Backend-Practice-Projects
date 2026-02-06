@@ -7,15 +7,18 @@ const schema = Joi.object({
 		.min(3)
 		.max(100)
 		.required(),
+
 	email: Joi.string()
 		.email()
 		.min(10)
 		.max(100)
 		.required(),
+
 	role: Joi.string()
 		.min(5)
 		.max(10)
 		.required(),
+
 	isActive: Joi.boolean()
 		.required(),
 });

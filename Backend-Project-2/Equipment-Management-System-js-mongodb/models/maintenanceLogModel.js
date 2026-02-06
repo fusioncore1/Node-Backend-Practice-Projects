@@ -15,18 +15,21 @@ const maintenanceLogSchema = new Schema({
 		ref: 'Equipment',
 		required: true,
 	},
+
 	description: {
 		type: String,
 		required: true,
 	},
+
 	startDate: {
 		type: Date,
 		required: true,
 	},
+
 	endDate: {
 		type: Date,
 		validate: {
-			validator: endAfterStartValidate(value),
+			validator: endAfterStartValidate,
 			message: 'End date should be after start date'
 		},
 		required: true,
