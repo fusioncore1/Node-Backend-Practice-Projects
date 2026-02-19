@@ -21,7 +21,7 @@ const schema = Joi.object({
 
 	status: Joi.string()
 		.min(6)
-		.max(10)
+		.max(11)
 		.required(),
 
 	dailyRate: Joi.number()

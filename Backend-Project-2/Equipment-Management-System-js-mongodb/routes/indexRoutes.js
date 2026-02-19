@@ -6,10 +6,25 @@ import rentalRouter from './rentalRouter.js';
 import userRouter from './userRouter.js';
 import maintenanceLogRouter from './maintenanceLogRouter.js';
 
-// Exporting all the routers:
-export {
-	equipmentRouter,
-	rentalRouter,
-	userRouter,
-	maintenanceLogRouter,
-};
+// External Modules/Packages:
+import express from 'express';
+
+// Creating the router object:
+const router = express.Router();
+
+// creating routes (1):
+router.use('/equipments/', equipmentRouter);
+router.use('/rentals/', rentalRouter);
+router.use('/users/', userRouter);
+router.use('/maintenance-log/', maintenanceLogRouter);
+
+// // Exporting all the routers:
+// export {
+// 	equipmentRouter,
+// 	rentalRouter,
+// 	userRouter,
+// 	maintenanceLogRouter,
+// };
+
+// Exporting the router object:
+export default router;

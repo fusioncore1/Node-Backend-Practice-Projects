@@ -30,9 +30,9 @@ const addMaintenanceLog = async (req, res, next) => {
 		// sending response:
 		res.status(201).send({
 			data: {
-				EquipmentId: equipmentId,
-				startDate,
-				endDate,          // professional way to write this is: 'endDate: endDate'
+				EquipmentId: data.equipmentId,
+				startDate: data.startDate,
+				endDate: data.endDate,          // professional way to write 'endDate: endDate' is 'endDate'
 			},
 			message: 'Maintenance Log Data added successfully',
 			success: true,

@@ -103,6 +103,9 @@ const updateRentalDataById = async (req, res, next) => {
 		// getting rental data from the user:
 		const updatedData = req.validatedData;
 
+		// // getting updated rental data from request body sent by user:
+		// const updatedData = req.body;
+
 		// getting data from rentals collection or table and updating it:
 		const updatedRentalById = await Rental.findByIdAndUpdate(
 			rentalDataId,

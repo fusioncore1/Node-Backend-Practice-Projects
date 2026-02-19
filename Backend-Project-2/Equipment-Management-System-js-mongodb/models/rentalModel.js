@@ -34,7 +34,7 @@ const rentalSchema = new mongoose.Schema({
 		validate: {
 			validator: endAfterStartValidate,
 			message: 'Actual return date must be after start date.',
-		}
+		},
 	},
 
 	status: {

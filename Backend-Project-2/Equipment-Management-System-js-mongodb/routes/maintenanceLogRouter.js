@@ -16,7 +16,7 @@ import express from 'express';
 const router = express.Router();
 
 // creating routes:
-router.post('/:id', validateData(maintenanceLogValidator), addMaintenanceLog);
+router.post('/', validateData(maintenanceLogValidator), addMaintenanceLog);
 router.get('/', getAllMaintenanceLogs);
 router.get('/:id', getMaintenanceLogById);
 router.put('/:id', validateData(maintenanceLogValidator), updateMaintenanceLogById);   // should use different validators for updates

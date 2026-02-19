@@ -4,12 +4,13 @@ import express from 'express';
 // internal modules/packages:
 import connectDb from './utils/connectDb.js';
 import errorHandler from './middlewares/error-middleware.js';
-import {
-	equipmentRouter,
-	rentalRouter,
-	userRouter,
-	maintenanceLogRouter,
-} from './routes/indexRoutes.js';
+// import {
+// 	equipmentRouter,
+// 	rentalRouter,
+// 	userRouter,
+// 	maintenanceLogRouter,
+// } from './routes/indexRoutes.js';
+import indexRoutes from './routes/indexRoutes.js';
 
 // creating the app:
 const app = express();
@@ -27,10 +28,13 @@ app.get('/', (req, res) => {
 });
 
 // creating routes:
-app.use('/api/equipments/', equipmentRouter);
-app.use('/api/rentals/', rentalRouter);
-app.use('/api/users/', userRouter);
-app.use('/api/maintenance-log/', maintenanceLogRouter);
+// app.use('/api/equipments/', equipmentRouter);
+// app.use('/api/rentals/', rentalRouter);
+// app.use('/api/users/', userRouter);
+// app.use('/api/maintenance-log/', maintenanceLogRouter);
+
+// creating routes (2):
+app.use('/api', indexRoutes);
 
 
 // error-middleware should be in the last of all the middlewares:

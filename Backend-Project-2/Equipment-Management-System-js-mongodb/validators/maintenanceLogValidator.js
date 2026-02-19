@@ -6,7 +6,7 @@ const schema = Joi.object({
 	equipmentId: Joi.string()
 		.alphanum()
 		.min(3)
-		.max(20)
+		.max(30)
 		.required(),
 	description: Joi.string()
 		.min(3)
