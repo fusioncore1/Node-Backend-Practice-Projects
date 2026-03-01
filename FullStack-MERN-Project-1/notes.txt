@@ -1,0 +1,215 @@
+Multi-Tenant Management System with Auth:
+
+Idea from ChatGPT:-
+"""
+✅ **SnP Mode Activated**
+I’ll guide. No full code. Only structure, thinking, architecture, edge cases.
+
+---
+
+## 🚀 Backend Project Challenge
+
+### **Multi-Tenant Project & Invoice Management API**
+
+Think of this as a mini SaaS backend.
+
+You’re building a system where:
+
+* Multiple **Organizations**
+* Each organization has **Users**
+* Users have **roles**
+* They manage **Projects**
+* Projects have **Invoices**
+* Invoices can be viewed only by authorized roles
+
+This will force you to implement:
+
+* Authentication (JWT)
+* Authorization (RBAC + tenant isolation)
+* Middleware layering
+* Clean architecture
+* Real-world edge cases
+
+---
+
+# 🎯 Problem Statement
+
+Build a REST API in **Node.js + Express** where:
+
+### 1️⃣ Authentication
+
+* Register
+* Login
+* Password hashing
+* JWT access tokens
+* Refresh token mechanism (optional but recommended)
+
+---
+
+### 2️⃣ Multi-Tenant System
+
+Each user belongs to exactly one Organization.
+
+Users from Org A must NEVER access data from Org B.
+
+This is critical.
+
+---
+
+### 3️⃣ Roles
+
+Each organization has:
+
+* `OWNER`
+* `ADMIN`
+* `MEMBER`
+* `ACCOUNTANT`
+
+Define permissions:
+
+| Role       | Can Create Project | Can Create Invoice | Can View All Invoices | Can Delete Project |
+| ---------- | ------------------ | ------------------ | --------------------- | ------------------ |
+| OWNER      | ✅                  | ✅                  | ✅                     | ✅                  |
+| ADMIN      | ✅                  | ✅                  | ✅                     | ❌                  |
+| MEMBER     | ✅                  | ❌                  | ❌                     | ❌                  |
+| ACCOUNTANT | ❌                  | ✅                  | ✅                     | ❌                  |
+
+You must enforce this via middleware.
+
+---
+
+### 4️⃣ Core Entities
+
+#### Organization
+
+* id
+* name
+
+#### User
+
+* id
+* name
+* email
+* passwordHash
+* role
+* organizationId
+
+#### Project
+
+* id
+* name
+* organizationId
+* createdBy
+
+#### Invoice
+
+* id
+* projectId
+* amount
+* status (DRAFT / SENT / PAID)
+* organizationId
+* createdBy
+
+---
+
+# 🧠 Architectural Requirements (Important)
+
+You must:
+
+### ✔ Separate Layers
+
+* Routes
+* Controllers
+* Services
+* Middleware
+* Models
+
+No business logic inside routes.
+
+---
+
+### ✔ Create Authorization Middleware
+
+Something like:
+
+```
+requireRole(["OWNER", "ADMIN"])
+```
+
+But think deeper:
+
+* Should this middleware check organization?
+* Or should organization check be separate?
+* Where should tenant isolation live?
+
+---
+
+### ✔ Implement Tenant Safety
+
+Even if someone manually edits JWT,
+they should not access other org’s data.
+
+Where will you validate this?
+
+Controller?
+Service?
+Database query level?
+
+Think carefully.
+
+---
+
+# 🧩 Advanced Challenge Add-ons (Optional Later)
+
+After base version works:
+
+* Soft delete projects
+* Audit logs
+* Activity history
+* Pagination + filtering
+* Rate limiting
+* Email verification
+* Invite user to organization
+* Role update endpoint (with hierarchy rules)
+
+---
+
+# 🧠 What This Project Will Test in You
+
+* Real authentication implementation
+* Secure JWT usage
+* Middleware chaining
+* Thinking like a backend architect
+* Clean code separation
+* Security mindset
+* Multi-tenant data isolation (very important in real SaaS)
+
+---
+
+# 🔥 Now Your First Task
+
+Before writing code, answer these:
+
+1. Will you use MongoDB or PostgreSQL? Why?
+2. How will you store roles? Enum? Separate table? Hardcoded?
+3. Where will tenant isolation be enforced?
+4. What information will you put inside JWT?
+5. Access token lifetime vs refresh token lifetime?
+
+Answer these architecturally.
+No code yet.
+
+Let’s build this properly.
+"""
+
+Tables or Collection:
+- Organization: id, name
+- User: id, name, email, passwordHash, role(owner/admin/member/accountant), organizationId
+- Project: id, name, organizationId, createdBy
+- Invoice: id, projectId, amount, status (draft/sent/paid), organizationId, createdBy
+
+Roles (what he/she can do):
+- Owner: create project, create invoice, view all invoices, delete project
+- Admin: create project, create invoice, view all invoices
+- Member: create project
+- Accountant: create invoice, view all invoices
