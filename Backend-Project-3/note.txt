@@ -1,0 +1,382 @@
+Me:
+```
+Okay, so I never started with Auth, though I do want to, but I have been caught in many many tasks. 
+
+Anyways activate SnP mode.
+
+And now, give me one more practical question to make crud backend in nodejs, and without Auth, cuz again I wanna learn but don't have time. And make it longer. More modules, more fields, so I can develop speed this time. Understood? Thanks.
+```
+
+ChatGPT:
+```
+✅ **SnP Mode Active** — I’ll give you the **problem specification only**, no code.
+
+You want **speed practice**, **many modules**, **many fields**, **real-world feeling**, but **no authentication**.
+
+So here’s a **large CRUD backend challenge**.
+
+---
+
+# 🚚 Backend Challenge
+
+## **Warehouse & Inventory Management System API**
+
+You are building the backend for a **logistics warehouse company** that stores products for multiple vendors.
+
+Your job is to build a **REST API** to manage:
+
+* Vendors
+* Warehouses
+* Products
+* Inventory
+* Purchase Orders
+* Shipments
+* Stock Movements
+
+No authentication for now.
+
+---
+
+# 🎯 Core Idea
+
+Vendors send products to warehouses.
+
+Warehouses store products.
+
+Shipments move products out.
+
+Inventory changes must be tracked.
+
+You must support **full CRUD for each module**.
+
+---
+
+# 📦 Module 1 — Vendors
+
+Represents companies supplying products.
+
+Fields:
+
+```
+vendorId
+name
+contactPerson
+email
+phone
+address
+city
+country
+gstNumber
+isActive
+createdAt
+updatedAt
+```
+
+CRUD Endpoints conceptually:
+
+```
+POST   /vendors
+GET    /vendors
+GET    /vendors/:id
+PATCH  /vendors/:id
+DELETE /vendors/:id
+```
+
+---
+
+# 🏭 Module 2 — Warehouses
+
+Company may have multiple warehouses.
+
+Fields:
+
+```
+warehouseId
+name
+location
+city
+country
+capacity
+managerName
+contactNumber
+isActive
+createdAt
+updatedAt
+```
+
+Relationships:
+
+```
+Warehouse -> stores many products
+```
+
+---
+
+# 📦 Module 3 — Products
+
+Products belong to vendors.
+
+Fields:
+
+```
+productId
+name
+sku
+description
+vendorId
+category
+unitPrice
+weight
+dimensions
+barcode
+isFragile
+createdAt
+updatedAt
+```
+
+Relationships:
+
+```
+Product -> belongs to Vendor
+```
+
+---
+
+# 📊 Module 4 — Inventory
+
+Tracks how much product is stored in each warehouse.
+
+Composite relationship:
+
+```
+Product + Warehouse
+```
+
+Fields:
+
+```
+inventoryId
+productId
+warehouseId
+quantityAvailable
+quantityReserved
+reorderLevel
+lastRestockedAt
+createdAt
+updatedAt
+```
+
+Important rule:
+
+```
+quantityAvailable >= 0
+```
+
+---
+
+# 📥 Module 5 — Purchase Orders (Incoming Stock)
+
+Vendors send goods.
+
+Fields:
+
+```
+purchaseOrderId
+vendorId
+warehouseId
+orderDate
+expectedDeliveryDate
+status (PENDING | SHIPPED | RECEIVED | CANCELLED)
+totalAmount
+notes
+createdAt
+updatedAt
+```
+
+Purchase order items:
+
+```
+purchaseOrderItemId
+purchaseOrderId
+productId
+quantityOrdered
+unitPrice
+totalPrice
+```
+
+---
+
+# 🚚 Module 6 — Shipments (Outgoing Orders)
+
+Products leaving warehouse.
+
+Fields:
+
+```
+shipmentId
+warehouseId
+shipmentDate
+destination
+status (PENDING | PACKED | SHIPPED | DELIVERED | CANCELLED)
+trackingNumber
+carrier
+notes
+createdAt
+updatedAt
+```
+
+Shipment items:
+
+```
+shipmentItemId
+shipmentId
+productId
+quantityShipped
+```
+
+Rule:
+
+```
+Cannot ship more than available inventory
+```
+
+---
+
+# 🔄 Module 7 — Stock Movements
+
+Track every stock change.
+
+Fields:
+
+```
+movementId
+productId
+warehouseId
+type (INBOUND | OUTBOUND | ADJUSTMENT)
+referenceType (PURCHASE_ORDER | SHIPMENT | MANUAL)
+referenceId
+quantityChanged
+previousQuantity
+newQuantity
+movementDate
+notes
+```
+
+This is essentially an **audit log for inventory**.
+
+---
+
+# 📈 Additional Features (Optional but Good Practice)
+
+Add endpoints like:
+
+```
+GET /inventory/low-stock
+GET /warehouses/:id/products
+GET /vendors/:id/products
+GET /products/:id/inventory
+GET /shipments/pending
+GET /purchase-orders/received
+```
+
+---
+
+# 🧠 Engineering Constraints
+
+You must:
+
+### 1️⃣ Use layered architecture
+
+```
+routes
+controllers
+services
+models
+middlewares
+```
+
+---
+
+### 2️⃣ Validation
+
+Validate:
+
+* SKU uniqueness
+* Email format
+* Quantity cannot be negative
+* Shipment quantity cannot exceed stock
+
+---
+
+### 3️⃣ Pagination
+
+For list endpoints:
+
+```
+?page=1&limit=20
+```
+
+---
+
+### 4️⃣ Filtering
+
+Example:
+
+```
+/products?category=electronics
+/vendors?city=surat
+/inventory?warehouseId=xyz
+```
+
+---
+
+### 5️⃣ Sorting
+
+```
+?sort=createdAt
+?sort=-quantityAvailable
+```
+
+---
+
+# 🧠 Real Backend Challenges You Will Face
+
+While building this you will encounter:
+
+* relational consistency
+* cascade deletes
+* inventory math bugs
+* query design
+* validation logic
+* pagination logic
+* controller/service separation
+* modular code organization
+
+Exactly what you want for **speed practice**.
+
+---
+
+# 🔥 Your First Architectural Decision
+
+Answer these before coding:
+
+1️⃣ Will you use **MongoDB references** or **embed subdocuments** for order items?
+
+2️⃣ Will **inventory update happen automatically when shipment/purchase order status changes**, or manually via endpoint?
+
+3️⃣ Will **stock movements be generated automatically** or manually created?
+
+These decisions define your backend architecture.
+
+---
+
+If you want, I can also give you a **Level-2 version of this challenge** later which introduces:
+
+* background jobs
+* event driven inventory
+* caching
+* idempotent APIs
+* race condition handling
+
+That version becomes **very close to real production logistics systems**.
+```
