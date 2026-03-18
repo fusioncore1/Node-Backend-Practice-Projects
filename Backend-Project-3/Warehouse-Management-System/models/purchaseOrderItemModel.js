@@ -7,12 +7,12 @@ import {
 // creating the schema:
 const purchaseOrderItemSchema = new Schema({
 	purchaseOrderId: {
-		type: Schema.Types.ObjectId(),
+		type: Schema.Types.ObjectId,
 		ref: 'PurchaseOrder',
 		required: true,
 	},
 	productId: {
-		type: Schema.Types.ObjectId(),
+		type: Schema.Types.ObjectId,
 		ref: 'Product',
 		required: true,
 	},

@@ -9,7 +9,7 @@ import {
 // creating the schema:
 const shipmentSchema = new Schema({
 	warehouseId: {
-		type: Schema.Types.ObjectId(),
+		type: Schema.Types.ObjectId,
 		ref: 'Warehouse',
 		required: true,
 	},

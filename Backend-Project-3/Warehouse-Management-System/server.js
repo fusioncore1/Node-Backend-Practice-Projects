@@ -4,6 +4,7 @@ import express from 'express';
 // Internal packages/modules:
 import connectDb from './utils/connectDb.js';
 import errorHandler from './middlewares/error-middleware.js';
+import allRoutes from './routes/indexRouters.js';
 
 // Creating the server app:
 const app = express();
@@ -21,7 +22,8 @@ app.get('/', (req, res) => {
 	res.send('Hello World!');
 });
 
-
+// Using routers:
+app.use('/api', allRoutes);
 
 // error middleware (which always comes at last of all middlewares):
 app.use(errorHandler);

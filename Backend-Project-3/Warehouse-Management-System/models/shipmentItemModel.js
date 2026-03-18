@@ -4,12 +4,12 @@ import mongoose from 'mongoose';
 // creating the schema:
 const shipmentItemSchema = new mongoose.Schema({
 	shipmentId: {
-		type: Schema.Types.ObjectId(),
+		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Shipment',
 		required: true,
 	},
 	productId: {
-		type: Schema.Types.ObjectId(),
+		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Product',
 		required: true,
 	},

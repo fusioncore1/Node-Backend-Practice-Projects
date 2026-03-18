@@ -21,7 +21,7 @@ const schema = Joi.object({
 		.required(),
 	capacity: Joi.number()
 		.positive()
-		.object(),
+		.required(),
 	managerName: Joi.string()
 		.min(3)
 		.max(100)

@@ -16,7 +16,7 @@ const productSchema = new Schema({
 		required: true,
 	},
 	vendorId: {
-		type: Schema.Types.ObjectId(),
+		type: Schema.Types.ObjectId,
 		ref: 'Vendor',
 		required: true,
 	},

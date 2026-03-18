@@ -6,12 +6,12 @@ import mongoose from 'mongoose';
 // creating the schema:
 const purchaseOrderSchema = new mongoose.Schema({
 	vendorId: {
-		type: Schema.Types.ObjectId(),
+		type: mongoose.Schema.Types.ObjectId,
 		ref: 'PurchaseOrder',
 		required: true,
 	},
 	warehouseId: {
-		type: Schema.Types.ObjectId(),
+		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Warehouse',
 		required: true,
 	},
